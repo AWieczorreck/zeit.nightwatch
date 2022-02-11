@@ -6,6 +6,7 @@ import selenium.webdriver
 
 class WebDriverChrome(selenium.webdriver.Chrome):
 
+    opts = Options()
     default_options = [
         'disable-gpu',
     ]
@@ -17,7 +18,6 @@ class WebDriverChrome(selenium.webdriver.Chrome):
         self.baseurl = baseurl
         self.sso_url = sso_url
         self.timeout = timeout
-        opts = Options()
         for x in self.default_options:
             opts.add_argument(x)
         if headless:
@@ -37,7 +37,7 @@ class WebDriverChrome(selenium.webdriver.Chrome):
         if timeout is None:
             timeout = self.timeout
         try:
-            WebDriverWait(self, timeout).until(condition)
+            return WebDriverWait(self, timeout).until(condition)
         except TimeoutException as e:
             raise AssertionError() from e
 
